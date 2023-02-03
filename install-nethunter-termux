@@ -366,14 +366,14 @@ function check_desktop() {
 function setup_desktop() {
         clear
         pkg install wget -y	
-wget https://raw.githubusercontent.com/Mdsaga/nh/main/install-kali-desktop
+wget https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/desktop-installer/install-kali-desktop
 mv $HOME/install-kali-desktop $CHROOT/home/kali/install-kali-desktop  
 }
 
 function plank_setup() {
 	if [[ ${wimg} == "full" ]]; then
         sudo apt install wget -y
-        wget https://raw.githubusercontent.com/Mdsaga/nh/main/install-app-menu
+        wget https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/appmenu-installer/install-app-menu
         mv $HOME/install-app-menu $CHROOT/home/kali/install-app-menu
 
 	fi
