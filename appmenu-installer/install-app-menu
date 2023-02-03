@@ -52,8 +52,8 @@ function app_menu() {
 	mkdir -p ~/.config/rofi
         rofi -dump-config > ~/.config/rofi/config.rasi
 	cd ~
-	wget https://raw.githubusercontent.com/sabamdarif/modded-kali/main/image/application-menu.png
-	wget https://raw.githubusercontent.com/sabamdarif/modded-kali/main/setup/style.rasi
+	wget https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/images/application-menu.png
+	wget https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/others/style.rasi
 	mv style.rasi application-menu.png ~/.config/rofi
 	echo "#!/usr/bin/env bash
 	## Run
