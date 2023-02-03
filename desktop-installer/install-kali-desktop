@@ -31,6 +31,7 @@ function xfce_install() {
 echo -e "${R} [${W}-${R}]${C} Installing XFCE DESKTOP"${W}
 	apt update
        sudo apt install xfce4* -y
+       sudo apt install grub-efi* -y
        echo -e "${R} [${W}-${R}]${C} Setting up VNC Server..."${W}
   if [[ ! -d "$HOME/.vnc" ]]; then
         mkdir -p "$HOME/.vnc"
