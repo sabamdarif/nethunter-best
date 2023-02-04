@@ -10,7 +10,7 @@ function package() {
     sudo apt update -y
     sudo apt install sudo -y
     sudo dpkg --configure -a
-    packs=(sudo wget curl nano kali-menu kali-linux-core git keyboard-configuration qterminal leafpad tzdata librsvg2-common menu kali-themes inetutils-tools dialog tightvncserver tigervnc-standalone-server tigervnc-tools dbus-x11 )
+    packs=(sudo wget curl nano kali-menu kali-linux-core git keyboard-configuration qterminal librsvg2-common menu kali-themes inetutils-tools dialog tightvncserver tigervnc-standalone-server tigervnc-tools dbus-x11 )
     sudo dpkg --configure -a
     for hulu in "${packs[@]}"; do
         type -p "$hulu" &>/dev/null || {
@@ -45,92 +45,15 @@ function extra_things() {
         wget -O $(find /home/kali/.mozilla/firefox -name *.default-esr)/user.js https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/others/user.js
 }
 
-function customize() {
-	sudo apt update
-	if [[ $(command -v plank) ]]; then
-	echo "${G}Plank is already installed .."${W}
-        sleep .5
-        clear
-   else
-	   clear
-	   sleep 1
-	   echo "${G}Plank not found.Installing now.."${W}
-	   echo
-	   sudo apt install plank -y
-	fi
-mkdir /home/kali/.config/autostart/
-        touch /home/kali/.config/autostart/plank.desktop
-        echo "[Desktop Entry]" >>/home/kali/.config/autostart/plank.desktop
-        echo "Type=Application" >>/home/kali/.config/autostart/plank.desktop
-        echo "Name=Plank" >>/home/kali/.config/autostart/plank.desktop
-        echo "Exec=plank" >>/home/kali/.config/autostart/plank.desktop
-        chmod +x /home/kali/.config/autostart/plank.desktop
-	sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting -y
-    cp /etc/skel/.zshrc ~/
-    sudo chsh -s $(which zsh) $(whoami)
-}
-
-function theme_setup() {
-        sudo apt install git -y
-	git clone --depth=1 https://github.com/vinceliuice/WhiteSur-gtk-theme /home/${user}/WhiteSur-gtk-theme
-	sudo chmod +x /home/${user}/WhiteSur-gtk-theme/install.sh
-        sudo bash /home/${user}/WhiteSur-gtk-theme/install.sh
-	sleep 2
-
-dbus-launch xfconf-query -c xfce4-desktop -np '/desktop-icons/style' -t 'int' -s '0'
-sleep 10
-dbus-launch xfconf-query -c xsettings -p /Net/ThemeName -s "WhiteSur-Light"
-}
-
-function setup_plank() {
-	gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ theme 'Gtk+'
-	gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-enabled true
-
-}
-
-function app_menu() {
-	sudo apt install rofi -y
-	sudo apt install wget -y
-	mkdir -p ~/.config/rofi
-        rofi -dump-config > ~/.config/rofi/config.rasi
-	cd ~
-	wget https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/images/application-menu.png
-	wget https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/others/style.rasi
-	mv style.rasi application-menu.png ~/.config/rofi
-	echo "#!/usr/bin/env bash
-
-	## Run
-	rofi \
-    -show drun \
-    -theme /home/kali/.config/rofi/style.rasi" >> /home/kali/.config/rofi/launcher.sh
-	touch appsearch.desktop
-echo "[Desktop Entry]
-Name=Application Search
-Exec=bash /home/kali/.config/rofi/launcher.sh
-Icon=/home/kali/.config/rofi/application-menu.png
-Type=Application
-Terminal=false
-StartupNotify=false" >> appsearch.desktop
-mkdir ~/.local/share/applications
-mv appsearch.desktop ~/.local/share/applications/
-chmod +x ~/.local/share/applications/appsearch.desktop
-if [[ -e "/home/kali/.config/plank/" ]]; then
-        mkdir /home/kali/.config/plank/
-        mkdir /home/kali/.config/plank/dock1/
-        mkdir /home/kali/.config/plank/dock1/launchers/
-    fi
-touch /home/kali/.config/plank/dock1/launchers/appsearch.dockitem
-echo "[PlankDockItemPreferences]
-Launcher=file:///home/kali/.local/share/applications/appsearch.desktop" >> /home/kali/.config/plank/dock1/launchers/appsearch.dockitem
-clear 
-echo "${G} setup successfull.."${W}
-
+function get-app-menu() {
+       cd ~
+       apt install wget -y
+       wget https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/appmenu-installer/install-app-menu
+       mv install-app-menu /home/kali/install-app-menu
+       chmod +x /home/kali/install-app-menu
+       rm /home/kali/install-kali-desktop
 }
 
 xfce_install
 package
-customize
-theme_setup
-setup_plank
-extra_things
-app_menu
+get-app-menu
