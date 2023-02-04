@@ -9,12 +9,6 @@ function package() {
     echo -e "${R} [${W}-${R}]${C} Checking required packages..."${W}
     sudo apt update -y
     sudo apt install sudo -y
-    apt --fix-broken install udisks2 -y
-    rm /var/lib/dpkg/info/udisks2.postinst
-    echo "" > /var/lib/dpkg/info/udisks2.postinst
-    sudo dpkg --configure -a
-    sudo apt-mark hold udisks2
-    sudo apt-mark unhold gvfs-daemons
     sudo dpkg --configure -a
     packs=(sudo wget curl nano kali-menu kali-linux-core git keyboard-configuration qterminal leafpad tzdata librsvg2-common menu kali-themes inetutils-tools dialog tightvncserver tigervnc-standalone-server tigervnc-tools dbus-x11 )
     sudo dpkg --configure -a
