@@ -37,6 +37,10 @@ echo -e "${R} [${W}-${R}]${C} Installing XFCE DESKTOP"${W}
 
 function extra_things() {
 	sudo apt install firefox-esr -y
+        DISPLAY=:1 firefox &
+        sleep 10
+        pkill -f firefox
+        sleep 1
         sudo apt install wget -y
         wget -O $(find /home/kali/.mozilla/firefox -name *.default-esr)/user.js https://raw.githubusercontent.com/sabamdarif/nethunter-best/main/others/user.js
 }
