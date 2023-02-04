@@ -125,8 +125,8 @@ echo "${G} setup successfull.."${W}
 
 xfce_install
 package
-extra_things
 customize
 theme_setup
 setup_plank
+extra_things
 app_menu
