@@ -37,6 +37,7 @@ echo -e "${R} [${W}-${R}]${C} Installing XFCE DESKTOP"${W}
 
 function extra_things() {
 	sudo apt install firefox-esr -y
+        sleep 1
         DISPLAY=:1 firefox &
         sleep 10
         pkill -f firefox
@@ -54,6 +55,32 @@ function get-app-menu() {
        rm /home/kali/install-kali-desktop
 }
 
+function plank_setup() {
+sudo apt update
+	if [[ $(command -v plank) ]]; then
+	echo "${G}Plank is already installed .."${W}
+        sleep .5
+        clear
+   else
+	   clear
+	   sleep 1
+	   echo "${G}Plank not found.Installing now.."${W}
+	   echo
+	   sudo apt install plank -y
+	fi
+mkdir /home/kali/.config/autostart/
+        touch /home/kali/.config/autostart/plank.desktop
+        echo "[Desktop Entry]" >>/home/kali/.config/autostart/plank.desktop
+        echo "Type=Application" >>/home/kali/.config/autostart/plank.desktop
+        echo "Name=Plank" >>/home/kali/.config/autostart/plank.desktop
+        echo "Exec=plank" >>/home/kali/.config/autostart/plank.desktop
+        chmod +x /home/kali/.config/autostart/plank.desktop
+	sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting -y
+    cp /etc/skel/.zshrc ~/
+    sudo chsh -s $(which zsh) $(whoami)
+}
+
 xfce_install
 package
+plank_setup
 get-app-menu
